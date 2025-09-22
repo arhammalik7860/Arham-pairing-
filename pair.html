@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ARHAM-FAROOQUE PAIR | WhatsApp Pairing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Generate WhatsApp pairing codes instantly with ARHAM-FAROOQUE PAIR">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #00ff88;
+      --primary-dark: #00cc6e;
+      --secondary-color: #ff6b6b;
+      --background-dark: #0a0a0f;
+      --background-card: rgba(255, 255, 255, 0.05);
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --error-color: #ff4757;
+      --success-color: #2ed573;
+      --warning-color: #ffa502;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--background-dark);
+      background-image: 
+        /* Grid pattern */
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        /* Original gradients */
+        radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(138, 43, 226, 0.1) 0%, transparent 50%);
+      background-size: 
+        30px 30px,
+        30px 30px,
+        100% 100%,
+        100% 100%,
+        100% 100%;
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Animated background particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+    }
+    
+    .main-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 480px;
+    }
+    
+    .glass-card {
+      background: var(--background-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+      opacity: 0.5;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .logo {
+      font-size: 36px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-color), #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+      position: relative;
+    }
+    
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-color), #00d4ff);
+      border-radius: 2px;
+    }
+    
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--success-color);
+      background: rgba(46, 213, 115, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(46, 213, 115, 0.2);
+    }
+    
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--success-color);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+    
+    .form-container {
+      margin-bottom: 30px;
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    
+    .input-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      transition: color 0.3s ease;
+    }
+    
+    .input-wrapper {
+      position: relative;
+    }
+    
+    .input-field {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 16px;
+      font-weight: 400;
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      color: var(--text-primary);
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: 'Inter', monospace;
+    }
+    
+    .input-field:focus {
+      border-color: var(--primary-color);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 0 4px rgba(0, 255, 136, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    .input-field.error {
+      border-color: var(--error-color);
+      box-shadow: 0 0 0 4px rgba(255, 71, 87, 0.1);
+    }
+    
+    .input-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+    
+    .input-field:focus + .input-icon {
+      color: var(--primary-color);
+    }
+    
+    .error-message {
+      color: var(--error-color);
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 8px;
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .generate-button {
+      width: 100%;
+      padding: 18px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: #000;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(0, 255, 136, 0.3);
+    }
+    
+    .generate-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .generate-button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 255, 136, 0.4);
+    }
+    
+    .generate-button:hover:not(:disabled)::before {
+      left: 100%;
+    }
+    
+    .generate-button:active {
+      transform: translateY(0);
+    }
+    
+    .generate-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 4px 12px rgba(0, 255, 136, 0.2);
+    }
+    
+    .button-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .loading-spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      border-top: 2px solid #000;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .result-container {
+      margin-top: 30px;
+      display: none;
+      animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .result-card {
+      background: var(--background-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .result-card.success {
+      border-left: 4px solid var(--success-color);
+      background: linear-gradient(135deg, rgba(46, 213, 115, 0.1), rgba(46, 213, 115, 0.05));
+    }
+    
+    .result-card.error {
+      border-left: 4px solid var(--error-color);
+      background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 71, 87, 0.05));
+    }
+    
+    .result-card.demo {
+      border-left: 4px solid var(--warning-color);
+      background: linear-gradient(135deg, rgba(255, 165, 2, 0.1), rgba(255, 165, 2, 0.05));
+    }
+    
+    .result-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    
+    .result-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    .result-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    
+    .code-display {
+      font-family: 'Inter', monospace;
+      font-size: 24px;
+      font-weight: 700;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      letter-spacing: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .code-display::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+      animation: shimmer 2s ease-in-out infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    
+    .copy-button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-primary);
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .copy-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+    
+    /* WhatsApp Channel Button */
+    .whatsapp-channel-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 25px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      z-index: 1000;
+    }
+    
+    .whatsapp-channel-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.4);
+    }
+    
+    .whatsapp-channel-btn::before {
+      content: '📢';
+      font-size: 18px;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    
+    .social-link {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+    
+    .social-link:hover {
+      background: var(--primary-color);
+      color: #000;
+      transform: translateY(-2px);
+    }
+    
+    @media (max-width: 480px) {
+      .glass-card {
+        padding: 30px 24px;
+        margin: 10px;
+        border-radius: 20px;
+      }
+      
+      .logo {
+        font-size: 32px;
+      }
+      
+      .input-field {
+        padding: 14px 16px;
+        font-size: 16px;
+      }
+      
+      .generate-button {
+        padding: 16px;
+      }
+      
+      .code-display {
+        font-size: 20px;
+        letter-spacing: 2px;
+      }
+      
+      .whatsapp-channel-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 12px 20px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  
+  <!-- WhatsApp Channel Button -->
+  <a href="https://whatsapp.com/channel/https://whatsapp.com/channel/0029VbBOsFL96H4LmUFRHz3b" target="_blank" class="whatsapp-channel-btn">
+    Join Channel
+  </a>
+  
+  <div class="main-container">
+    <div class="glass-card">
+      <div class="header">
+        <h1 class="logo">ARHAM-PAIRING</h1>
+        <p class="subtitle">WhatsApp Pairing Code Generator</p>
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+          <span>Service Online</span>
+        </div>
+      </div>
+      
+      <form id="pairForm" class="form-container">
+        <div class="input-group">
+          <label for="number" class="input-label">WhatsApp Number</label>
+          <div class="input-wrapper">
+            <input 
+              type="tel" 
+              id="number" 
+              class="input-field"
+              placeholder="Enter your number (e.g., 923703250530)" 
+              autocomplete="tel"
+              aria-describedby="numberError"
+            />
+            <div class="input-icon">📱</div>
+          </div>
+          <div id="numberError" class="error-message"></div>
+        </div>
+        
+        <button type="submit" id="generateBtn" class="generate-button">
+          <div class="button-content">
+            <span class="btn-text">Generate Pair Code</span>
+            <div class="loading-content" style="display: none;">
+              <div class="loading-spinner"></div>
+              <span>Generating...</span>
+            </div>
+          </div>
+        </button>
+      </form>
+
+      <div id="result" class="result-container"></div>
+      
+      <div class="footer">
+        <p class="footer-text">Secure • Fast • Reliable</p>
+        <div class="social-links">
+          <a href="#" class="social-link" title="GitHub">⚡</a>
+          <a href="#" class="social-link" title="Telegram">💬</a>
+          <a href="#" class="social-link" title="WhatsApp">📱</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class WhatsAppPairingApp {
+      constructor() {
+        this.form = document.getElementById('pairForm');
+        this.numberInput = document.getElementById('number');
+        this.generateBtn = document.getElementById('generateBtn');
+        this.resultContainer = document.getElementById('result');
+        this.errorDiv = document.getElementById('numberError');
+        this.btnText = document.querySelector('.btn-text');
+        this.loadingContent = document.querySelector('.loading-content');
+        
+        this.init();
+        this.createParticles();
+      }
+      
+      init() {
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        this.numberInput.addEventListener('input', () => this.clearErrors());
+        this.numberInput.addEventListener('keypress', (e) => this.handleKeyPress(e));
+        this.numberInput.addEventListener('focus', () => this.handleInputFocus());
+        this.numberInput.addEventListener('blur', () => this.handleInputBlur());
+      }
+      
+      createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.top = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 6 + 's';
+          particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+          particlesContainer.appendChild(particle);
+        }
+      }
+      
+      handleInputFocus() {
+        const label = document.querySelector('.input-label');
+        label.style.color = 'var(--primary-color)';
+      }
+      
+      handleInputBlur() {
+        const label = document.querySelector('.input-label');
+        label.style.color = 'var(--text-secondary)';
+      }
+      
+      handleKeyPress(e) {
+        const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'];
+        if (!allowedKeys.includes(e.key) && !/[0-9+]/.test(e.key)) {
+          e.preventDefault();
+        }
+      }
+      
+      validatePhoneNumber(number) {
+        const cleaned = number.replace(/[^\d+]/g, '');
+        
+        if (!cleaned) {
+          return { isValid: false, message: 'Phone number is required' };
+        }
+        
+        if (!/^\+?[1-9]\d{7,14}$/.test(cleaned)) {
+          return { isValid: false, message: 'Please enter a valid international phone number' };
+        }
+        
+        if (cleaned.replace('+', '').length < 7) {
+          return { isValid: false, message: 'Phone number is too short (minimum 7 digits)' };
+        }
+        
+        if (cleaned.replace('+', '').length > 15) {
+          return { isValid: false, message: 'Phone number is too long (maximum 15 digits)' };
+        }
+        
+        return { isValid: true, cleaned };
+      }
+      
+      showError(message) {
+        this.numberInput.classList.add('error');
+        this.errorDiv.textContent = message;
+        this.errorDiv.style.display = 'block';
+      }
+      
+      clearErrors() {
+        this.numberInput.classList.remove('error');
+        this.errorDiv.style.display = 'none';
+      }
+      
+      setLoading(isLoading) {
+        this.generateBtn.disabled = isLoading;
+        if (isLoading) {
+          this.btnText.style.display = 'none';
+          this.loadingContent.style.display = 'flex';
+        } else {
+          this.btnText.style.display = 'block';
+          this.loadingContent.style.display = 'none';
+        }
+      }
+      
+      showResult(content, type = 'success') {
+        this.resultContainer.innerHTML = `
+          <div class="result-card ${type}">
+            ${content}
+          </div>
+        `;
+        this.resultContainer.style.display = 'block';
+      }
+      
+      async handleSubmit(e) {
+        e.preventDefault();
+        
+        const number = this.numberInput.value.trim();
+        const validation = this.validatePhoneNumber(number);
+        
+        if (!validation.isValid) {
+          this.showError(validation.message);
+          return;
+        }
+        
+        this.clearErrors();
+        this.setLoading(true);
+        
+        try {
+          await this.generatePairCode(validation.cleaned);
+        } catch (error) {
+          this.showResult(`
+            <div class="result-icon">❌</div>
+            <div class="result-title">Generation Failed</div>
+            <div class="result-subtitle">${error.message}</div>
+          `, 'error');
+        } finally {
+          this.setLoading(false);
+        }
+      }
+      
+      async generatePairCode(number) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 10000);
+          
+          const response = await fetch(`/code?number=${encodeURIComponent(number)}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            signal: controller.signal
+          });
+          
+          clearTimeout(timeoutId);
+          
+          if (!response.ok) {
+            throw new Error(`Server responded with status ${response.status}`);
+          }
+          
+          const data = await response.json();
+          
+          if (data.code) {
+            this.showSuccessResult(data.code, number);
+          } else if (data.error) {
+            throw new Error(data.error);
+          } else {
+            throw new Error('Invalid response format from server');
+          }
+          
+        } catch (error) {
+          if (error.name === 'AbortError') {
+            throw new Error('Request timed out. Please try again.');
+          } else if (error.name === 'TypeError' || error.message.includes('fetch')) {
+            this.showDemoResult(number);
+          } else {
+            throw error;
+          }
+        }
+      }
+      
+      showSuccessResult(code, number) {
+        const content = `
+          <div class="result-icon">✅</div>
+          <div class="result-title">Pairing Code Generated!</div>
+          <div class="result-subtitle">Use this code to pair your WhatsApp</div>
+          <div class="code-display">${code}</div>
+          <button class="copy-button" onclick="navigator.clipboard.writeText('${code}')">
+            📋 Copy Code
+          </button>
+          <div style="margin-top: 16px; font-size: 12px; color: var(--text-secondary);">
+            Code generated for: ${number}
+          </div>
+        `;
+        this.showResult(content, 'success');
+      }
+      
+      showDemoResult(number) {
+        const demoCode = Math.random().toString().substr(2, 8);
+        const content = `
+          <div class="result-icon">⚠️</div>
+          <div class="result-title">Demo Mode</div>
+          <div class="result-subtitle">Server unavailable - showing demo code</div>
+          <div class="code-display">${demoCode}</div>
+          <button class="copy-button" onclick="navigator.clipboard.writeText('${demoCode}')">
+            📋 Copy Demo Code
+          </button>
+          <div style="margin-top: 16px; font-size: 12px; color: var(--text-secondary);">
+            This is a demo code for: ${number}
+          </div>
+        `;
+        this.showResult(content, 'demo');
+      }
+    }
+    
+    // Initialize the app when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      new WhatsAppPairingApp();
+    });
+  
+  </script>
+
+</body>
+</html>
